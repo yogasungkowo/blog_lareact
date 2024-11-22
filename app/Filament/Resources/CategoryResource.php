@@ -43,7 +43,7 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->modal(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -48,7 +48,10 @@ class PostResource extends Resource
                 ->relationship('categories', 'name')
                 ->preload()
                 ->multiple()
-                ->searchable(),
+                ->createOptionForm([
+                    TextInput::make('name')
+                    ->label('Create New Category')
+                ]),
 
                 RichEditor::make('content')
                 ->label('Content')
@@ -82,7 +85,11 @@ class PostResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->searchable(),
-                TextColumn::make('categories.name'),
+                TextColumn::make('categories.name')->searchable(),
+                TextColumn::make('users.name')
+                ->label('Author')
+                ->sortable()
+                ->searchable(),
                 ImageColumn::make('post_image')
                 ->width(100),
             ])

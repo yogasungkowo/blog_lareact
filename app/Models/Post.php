@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'title',
@@ -31,12 +31,12 @@ class Post extends Model
 
     public function users(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'post_categories', 'category_id', 'post_id');
+        return $this->belongsToMany(Category::class, 'post_categories', 'post_id', 'category_id');
     }
 
     protected static function booted()

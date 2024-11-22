@@ -2,17 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
+use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -25,7 +28,27 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+
+                TextInput::make('email')
+                ->required()
+                ->email()
+                ->prefix('@')
+                ->maxLength(255),
+
+                TextInput::make('password')
+                ->required()
+                ->password()
+                ->revealable()
+                ->minLength(8)
+                ->maxLength(255),
+
+                FileUpload::make('profile_photo')
+                ->image()
+                ->directory('user-avater')
+                ->imageEditor()
             ]);
     }
 
@@ -36,6 +59,11 @@ class UserResource extends Resource
                 TextColumn::make('name'),
                 TextColumn::make('email'),
                 
+                ImageColumn::make('profile_photo')
+                ->width(50)
+                ->height(50)
+                ->label('Profile Photo')
+                ->circular()
             ])
             ->filters([
                 //

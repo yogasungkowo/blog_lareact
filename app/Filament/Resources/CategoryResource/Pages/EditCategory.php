@@ -16,4 +16,9 @@ class EditCategory extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function shouldOpenModal(): bool
+    {
+        return true; // Modal aktif
+    }
 }

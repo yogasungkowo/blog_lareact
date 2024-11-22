@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('content');
             $table->string('post_image')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
